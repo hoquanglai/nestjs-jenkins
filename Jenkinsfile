@@ -3,7 +3,7 @@ pipeline {
     environment {
         BRANCH_NAME = 'main'
     }
-    tools {nodejs "nodejs"}
+    // tools {nodejs "nodejs"}
     stages {
         stage('Cloning Git') {
             steps {
@@ -11,14 +11,22 @@ pipeline {
                 echo "Clone git repository from branch: ${BRANCH_NAME}"
             }
         }
-        stage('Start') {
+        stage('deploy') {
+            agent {
+                docker { image 'docker' }
+            }
             steps {
-                echo 'Installing dependencies and starting the application...'
-                sh 'node --version' 
-                sh 'npm install'
-                sh 'npm start'
+                sh 'node --version'
             }
         }
+        // stage('Start') {
+        //     steps {
+        //         echo 'Installing dependencies and starting the application...'
+        //         sh 'node --version' 
+        //         sh 'npm install'
+        //         sh 'npm start'
+        //     }
+        // }
     }
     post {
         always {
