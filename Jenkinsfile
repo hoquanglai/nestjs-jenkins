@@ -4,19 +4,6 @@ pipeline {
         BRANCH_NAME = 'main'
     }
     stages {
-        stage('Prepare Environment') {
-            steps {
-                sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash'
-                sh 'export NVM_DIR="$HOME/.nvm"'
-                // Update this line
-                sh '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
-                sh 'nvm install 20.11.1'
-                sh 'nvm use 20.11.1'
-                // Make sure Node and npm are available
-                sh 'node --version'
-                sh 'npm --version'
-            }
-        }
         stage('Cloning Git') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: "*/${BRANCH_NAME}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GithubCredential', url: 'https://github.com/hoquanglai/nestjs-jenkins.git']]])
