@@ -3,6 +3,9 @@ pipeline {
     environment {
         BRANCH_NAME = 'main'
     }
+    tools {
+        nodejs 'MyNodeJS'
+    }
     stages {
         stage('Cloning Git') {
             steps {
@@ -11,6 +14,11 @@ pipeline {
             }
         }
         stage('Start') {
+            steps {
+                echo 'Installing dependencies and starting the application...'
+                sh 'npm install'
+                sh 'npm start'
+            }
         }
     }
 }
