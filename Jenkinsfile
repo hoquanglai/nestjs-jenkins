@@ -1,18 +1,16 @@
 pipeline {
-    agent {
-        docker { 
-            image 'node:20.11.1-alpine3.19' 
-            // Add any docker args if needed. Example: args '-p 3000:3000'
-        }
-    }
+    agent any
     environment {
         BRANCH_NAME = 'main'
     }
     stages {
-        stage('Test') {
+        stage('Prepare Environment') {
             steps {
-                sh 'node --version'
-                sh 'npm --version'
+                sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash'
+                sh 'export NVM_DIR="$HOME/.nvm"'
+                sh '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+                sh 'nvm install 20.11.1'
+                sh 'nvm use 20.11.1'
             }
         }
         stage('Cloning Git') {
@@ -25,7 +23,6 @@ pipeline {
             steps {
                 echo 'Installing dependencies and starting the application...'
                 sh 'npm install'
-                // If npm start is supposed to run the app, consider using it in a post-build step or adjust as necessary for your CI process
                 sh 'npm start'
             }
         }
