@@ -3,7 +3,7 @@ pipeline {
     environment {
         BRANCH_NAME = 'main'
     }
-    // tools {nodejs "latest"}
+    tools {nodejs "nodejs"}
     stages {
         stage('Cloning Git') {
             steps {
