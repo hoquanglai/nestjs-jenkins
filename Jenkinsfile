@@ -16,7 +16,7 @@ pipeline {
                 echo 'Installing dependencies and starting the application...'
                 sh 'node --version' 
                 sh 'npm ci'
-                // sh 'npm start'
+                sh 'npm run start'
             }
         }
     }
