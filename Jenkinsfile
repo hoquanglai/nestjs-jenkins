@@ -13,6 +13,7 @@ pipeline {
         stage('Start') {
             steps {
                 echo 'Installing dependencies and starting the application...'
+                sh 'node --version' 
                 sh 'npm install'
                 sh 'npm start'
             }
